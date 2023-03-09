@@ -6,3 +6,5 @@ This tracks my current infrastructure configuration for [ebay-scraper](https://g
 
 ## To-Do
 Implement PostgreSQL RDS database in Terraform.
+
+Automate storage of DB credentials to AWS Secrets Manager
