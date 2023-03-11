@@ -7,6 +7,6 @@ Provisions Lambda and an associated S3 bucket that holds the function code. A .z
 Provisions a PostgreSQL RDS instance that is eligible for AWS' free tier. This will be where the ebay-scraper Lambda stores its findings.
 
 ## To-Do
-Automate configuration of RDS instance
+Automate configuration of database and tables
 
 Automate storage of DB credentials to AWS Secrets Manager
