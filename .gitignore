@@ -5,3 +5,6 @@ terraform.tfstate.backup
 lambdaPackage/
 .terraform.lock.hcl
 .terraform/
+.terraform.tfstate.lock.info
+ebay-scraper/
+secrets.tfvars

@@ -1,44 +1,31 @@
 locals {
-  lambda_dir_path = "${path.module}/lambda"
-}
-
-data "archive_file" "lambda_zip" {
-  type        = "zip"
-  output_path = "${path.module}/lambda.zip"
-  source_dir  = "${local.lambda_dir_path}"
+  cwd = "${path.module}"
 }
 
 resource "aws_s3_bucket" "ebay_scraper_tf_bucket" {
-  bucket_prefix = "ebay-scraper-tf-bucket-"
+  bucket_prefix = "ebay-scraper-tf-"
 }
 
-resource "aws_s3_object" "lambda_zip" {
+resource "aws_s3_object" "function_zip" {
   key    = "function.zip"
   bucket = aws_s3_bucket.ebay_scraper_tf_bucket.bucket
-
-  source = "${data.archive_file.lambda_zip.output_path}"
+  source = "${local.cwd}/ebay-scraper/function.zip"
 }
 
 # This will monitor the contents of the "lambda" directory and automatically
 # trigger the creation of a new zip file and upload to the S3 bucket whenever
-# a file changes inside the directory.
-resource "null_resource" "watch_lambda_dir" {
+# lambda_function.py changes inside the directory.
+resource "null_resource" "watch_lambda_function" {
   triggers = {
-    lambda_dir_checksum = "${filemd5("${local.lambda_dir_path}/lambda_function.py")}"
+    lambda_func_checksum = "${filemd5("${local.cwd}/ebay-scraper/lambda/lambda_function.py")}"
   }
 
   provisioner "local-exec" {
-    command = "cd ${local.lambda_dir_path} && zip -r ../lambda.zip ."
+    command = "cd ${local.cwd}/ebay-scraper && ./build.sh"
   }
 
   provisioner "local-exec" {
-    command = "aws s3 cp ${path.module}/lambda.zip s3://${aws_s3_bucket.ebay_scraper_tf_bucket.bucket}/function.zip"
-  }
-}
-
-resource "null_resource" "function_deployment" {
-  triggers = {
-    function_sha256 = filesha256(data.archive_file.lambda_zip.output_path)
+    command = "aws s3 cp ${local.cwd}/ebay-scraper/function.zip s3://${aws_s3_bucket.ebay_scraper_tf_bucket.bucket}/function.zip"
   }
 
   provisioner "local-exec" {
