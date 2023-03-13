@@ -1,6 +1,14 @@
 # infra-ebay-scraper
 Terraform AWS IaC for [ebay-scraper](https://github.com/hunter-meloche/ebay-scraper). This tracks my current development infrastructure.
 
+## Dependencies
+```
+AWS CLI
+Terraform
+UNIX Shell
+[psql](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/)
+```
+
 ## How to use
 Run deploy.sh and it will prompt you to set a database username and password the first time it runs. Database credentials are saved in AWS Secrets Manager.
 
