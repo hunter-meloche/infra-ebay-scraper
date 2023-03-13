@@ -8,3 +8,5 @@ lambdaPackage/
 .terraform.tfstate.lock.info
 ebay-scraper/
 secrets.tfvars
+provision.sh
+

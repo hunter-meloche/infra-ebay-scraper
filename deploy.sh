@@ -1,7 +1,20 @@
 #!/bin/bash
 
-# Check if DB credentials already exist in secrets.tfvars; if they're not found, prompt for input
-if [[ ! $(sed -n '1p' secrets.tfvars) ]] || [[ ! $(sed -n '2p' secrets.tfvars) ]]; then
+# Deletes local store of DB credentials, if it exists
+if [ -e secrets.tfvars ]; then
+  rm secrets.tfvars
+fi
+
+SECRETS=$(aws secretsmanager get-secret-value --secret-id dev/ebay-scraper-tf/postgres \
+  --query 'SecretString' --output text)
+
+# Checks if DB credentials exist in AWS; if not, it prompts for new credentials
+if [ $? -eq 0 ]; then
+  db_username=$(echo $SECRETS | sed -n 's/.*"username":"\([^"]*\)".*/\1/p')
+  db_password=$(echo $SECRETS | sed -n 's/.*"password":"\([^"]*\)".*/\1/p')
+  echo "db_username = \"$db_username\"" >> secrets.tfvars
+  echo "db_password = \"$db_password\"" >> secrets.tfvars
+else
   echo "Desired database username: "
   read db_username
   echo "db_username = \"$db_username\"" >> secrets.tfvars
@@ -18,11 +31,15 @@ else
   cd ebay-scraper
 fi
 
-# Places the function in the infra lambda directory
+# Builds the app with its dependencies
 chmod +x build.sh
 ./build.sh
 
+# Provisions the infrastructure
 cd ..
 terraform init
 terraform plan -var-file="secrets.tfvars"
 terraform apply -var-file="secrets.tfvars" --auto-approve
+
+# Deletes local store of DB credentials
+rm secrets.tfvars
