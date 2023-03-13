@@ -6,7 +6,7 @@ Terraform AWS IaC for [ebay-scraper](https://github.com/hunter-meloche/ebay-scra
 AWS CLI
 Terraform
 UNIX Shell
-[psql](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/)
+psql
 ```
 
 ## How to use
