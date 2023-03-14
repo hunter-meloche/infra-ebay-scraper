@@ -8,7 +8,7 @@ Terraform
 UNIX Shell
 psql
 ```
-
+[Guide for psql](https://www.compose.com/articles/postgresql-tips-installing-the-postgresql-client/)
 ## How to use
 Run deploy.sh and it will prompt you to set a database username and password the first time it runs. Database credentials are saved in AWS Secrets Manager.
 
