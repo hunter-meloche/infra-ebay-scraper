@@ -1,5 +1,5 @@
-resource "aws_lambda_function" "ebay_scraper_tf_function" {
-  s3_bucket     = aws_s3_bucket.ebay_scraper_tf_bucket.bucket
+resource "aws_lambda_function" "ebay_scraper_tf" {
+  s3_bucket     = aws_s3_bucket.ebay_scraper_tf.bucket
   s3_key        = aws_s3_object.function_zip.key
   function_name = "ebay-scraper-tf"
   role          = aws_iam_role.ebay_scraper_tf.arn

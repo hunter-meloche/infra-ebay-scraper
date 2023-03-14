@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Deletes local store of DB credentials, if it exists
+cd terraform
 if [ -e secrets.tfvars ]; then
   rm secrets.tfvars
 fi
@@ -24,6 +25,7 @@ else
 fi
 
 # Clones or pulls the app repo
+cd ..
 if cd ebay-scraper; then
   git pull
 else
@@ -36,7 +38,7 @@ chmod +x build.sh
 ./build.sh
 
 # Provisions the infrastructure
-cd ..
+cd ../terraform
 terraform init
 terraform plan -var-file="secrets.tfvars"
 terraform apply -var-file="secrets.tfvars" --auto-approve

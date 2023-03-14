@@ -9,6 +9,6 @@ resource "aws_secretsmanager_secret_version" "db_connection" {
   secret_string = jsonencode({
     "username" = "${var.db_username}",
     "password" = "${var.db_password}",
-    "host"     = "${aws_db_instance.db_instance.address}"
+    "host"     = "${aws_db_instance.ebay_scraper_tf.address}"
   })
 }

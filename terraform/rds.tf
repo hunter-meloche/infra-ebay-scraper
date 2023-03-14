@@ -1,4 +1,4 @@
-resource "aws_db_instance" "db_instance" {
+resource "aws_db_instance" "ebay_scraper_tf" {
   allocated_storage    = 20
   engine               = "postgres"
   engine_version       = "14.6"
@@ -18,7 +18,7 @@ resource "null_resource" "db_setup" {
 
   provisioner "local-exec" {
 
-    command = "psql -h ${aws_db_instance.db_instance.address} -p 5432 -U ${var.db_username} -d ebay_listings -f ${path.module}/listingsTable.sql"
+    command = "psql -h ${aws_db_instance.ebay_scraper_tf.address} -p 5432 -U ${var.db_username} -d ebay_listings -f ../listingsTable.sql"
 
     environment = {
       PGPASSWORD = var.db_password
