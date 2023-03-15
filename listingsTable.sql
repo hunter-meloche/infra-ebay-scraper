@@ -21,8 +21,3 @@ CREATE TABLE IF NOT EXISTS public.listings
     "ignoreReason" text COLLATE pg_catalog."default",
     CONSTRAINT listings_pkey PRIMARY KEY ("listingId")
 )
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.listings
-    OWNER to postgres;
