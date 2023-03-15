@@ -19,7 +19,7 @@ resource "null_resource" "watch_lambda_function" {
   }
 
   provisioner "local-exec" {
-    command = "../ebay-scraper/build.sh"
+    command = "cd ../ebay-scraper/ && ./build.sh"
   }
 
   provisioner "local-exec" {
@@ -27,6 +27,6 @@ resource "null_resource" "watch_lambda_function" {
   }
 
   provisioner "local-exec" {
-    command = "aws lambda update-function-code --function-name ${aws_lambda_function.ebay_scraper_tf.function_name} --s3-bucket ${aws_s3_bucket.ebay_scraper_tf.bucket} --s3-key function.zip"
+    command = "aws lambda update-function-code --function-name ${aws_lambda_function.ebay_scraper_tf.function_name} --s3-bucket ${aws_s3_bucket.ebay_scraper_tf.bucket} --s3-key ${aws_s3_object.function_zip.key}"
   }
 }

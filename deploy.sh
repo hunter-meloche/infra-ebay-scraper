@@ -26,10 +26,11 @@ fi
 
 # Clones or pulls the app repo
 cd ..
-if cd ebay-scraper; then
+if [ -d ebay-scraper ]; then
+  cd ebay-scraper
   git pull
 else
-  git clone https://github.com/hunter-meloche/ebay-scraper.git
+  git clone --branch shipping-seller https://github.com/hunter-meloche/ebay-scraper.git
   cd ebay-scraper
 fi
 
