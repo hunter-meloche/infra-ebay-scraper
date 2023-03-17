@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# Deletes local store of DB credentials, if it exists
+# Deletes local store of DB credentials if it exists
 cd terraform
 if [ -e secrets.tfvars ]; then
   rm secrets.tfvars
 fi
 
+# Checks if there is already an active deployment by attempting to retrieve database credentials
 SECRETS=$(aws secretsmanager get-secret-value --secret-id dev/ebay-scraper-tf/postgres \
-  --query 'SecretString' --output text)
+  --query 'SecretString' --output text >/dev/null 2>&1)
 
 # Checks if DB credentials exist in AWS; if not, it prompts for new credentials
 if [ $? -eq 0 ]; then
@@ -24,19 +25,18 @@ else
   echo "db_password = \"$db_password\"" >> secrets.tfvars
 fi
 
-# Clones or pulls the app repo
+# Clones or updates the app repo
 cd ..
 if [ -d ebay-scraper ]; then
   cd ebay-scraper
   git pull
 else
-  git clone --branch shipping-seller https://github.com/hunter-meloche/ebay-scraper.git
+  git clone https://github.com/hunter-meloche/ebay-scraper.git
   cd ebay-scraper
 fi
 
-# Builds the app with its dependencies
+# Ensures build script has permission to execute
 chmod +x build.sh
-./build.sh
 
 # Provisions the infrastructure
 cd ../terraform
