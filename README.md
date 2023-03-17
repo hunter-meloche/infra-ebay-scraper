@@ -3,6 +3,9 @@ Terraform AWS IaC for [ebay-scraper](https://github.com/hunter-meloche/ebay-scra
 
 The idea is you just run deploy.sh, answer a few prompts and then having a working cloud deployment of ebay-scraper that feed whatever events you want into.
 
+## Disclaimer
+This is not to be used for commercial purposes or harm eBay. This project is for educational purposes only and not intended to be used in any way to break eBay or Cloudflare's Terms of Service agreements. Web scraping publicly available information is legal where I live, but check your own local laws.
+
 ## Dependencies
 ```
 AWS CLI
