@@ -15,7 +15,7 @@ psql
 ## How to use
 Run deploy.sh and it will prompt you to set a database username and password the first time it runs. Database credentials are saved in AWS Secrets Manager.
 
-To tear down everything it's provisioned, run terminate.sh.
+To tear down everything it's provisioned, run destroy.sh.
 
 ## Implemented
 Provisions Lambda and an associated S3 bucket that holds the function code. A .zip of the Lambda function is automatically created and uploaded to the s3 bucket if it detects a code change based on the md5 value of lambda_function.py. In other words, you can run the deploy script again to update the code that's actively scanning your ebay items without any headache.
