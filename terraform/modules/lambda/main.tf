@@ -50,6 +50,7 @@ resource "aws_s3_bucket" "ebay_scraper_tf" {
 
 # S3 object for the function code zip file that the lambda will execute
 resource "aws_s3_object" "function_zip" {
+  depends_on = [null_resource.watch_lambda_function]
   key    = "function.zip"
   bucket = aws_s3_bucket.ebay_scraper_tf.bucket
   source = "../ebay-scraper/function.zip"
