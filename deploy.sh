@@ -31,7 +31,7 @@ if [ -d ebay-scraper ]; then
   cd ebay-scraper
   git pull
 else
-  git clone --branch no-scrapeops https://github.com/hunter-meloche/ebay-scraper.git
+  git clone https://github.com/hunter-meloche/ebay-scraper.git
   cd ebay-scraper
 fi
 
